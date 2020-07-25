@@ -1,12 +1,14 @@
 import java.util.List;
 
-public class Listener extends Thread {
+import static java.lang.Thread.sleep;
+
+public class Listener implements Runnable {
 
     private MessagePassingMain messagePassingMain;
 
     public Listener(MessagePassingMain messagePassingMain) {
         this.messagePassingMain = messagePassingMain;
-        start();
+//        start();
     }
 
     public void run() {

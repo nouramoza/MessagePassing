@@ -12,7 +12,8 @@ public class MessagePassingMain {
 
         MessagePassingMain messagePassingMain = new MessagePassingMain();
         Listener listener = new Listener(messagePassingMain);
-        Initiator initiator = new Initiator(messagePassingMain, listener);
+        new Thread(listener).start();
+        new Thread(new Initiator(messagePassingMain, listener)).start();
 
 //        listener.join();
 //        initiator.join();

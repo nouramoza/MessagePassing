@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Initiator extends Thread {
+import static java.lang.Thread.sleep;
+
+public class Initiator implements Runnable {
     private MessagePassingMain messagePassingMain;
     private Listener listener;
     private List<String> stringList;
@@ -20,7 +22,7 @@ public class Initiator extends Thread {
         stringList.add("HI TEN");
         this.messagePassingMain = messagePassingMain;
         this.listener = listener;
-        start();
+//        start();
     }
 
     public void run() {

@@ -6,8 +6,8 @@ public class CommonConstants {
     }
 
     public static class WaitingTime{
-        public static final long LISTENER_WAIT_TIME = 0;
-        public static final long INITIATOR_WAIT_TIME = 0;
+        public static final long INITIATOR_WAIT_TIME = 200;
+        public static final long LISTENER_WAIT_TIME = 600;
 
     }
 }
