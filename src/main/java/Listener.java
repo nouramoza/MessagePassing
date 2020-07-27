@@ -1,7 +1,6 @@
-import java.util.List;
-
 import static java.lang.Thread.sleep;
 
+// Listener class is Observer that tracks Subject changes
 public class Listener implements Runnable {
 
     private MessagePassingMain messagePassingMain;
@@ -12,7 +11,7 @@ public class Listener implements Runnable {
     }
 
     public void run() {
-        while(Message.receivedCounter < 10) {
+        while(Message.receivedCounter < CommonConstants.CommonNumbers.NUMBER_OF_COUNT) {
             while(messagePassingMain.message.size() <= Message.receivedCounter) { // no order
                 synchronized (this) {
                     try {
@@ -26,23 +25,23 @@ public class Listener implements Runnable {
                 }
             }
 
-//            synchronized (messagePassingMain.message.get(Message.receivedCounter).getMessage()) {
-            String newMessage = messagePassingMain.message.get(Message.receivedCounter).getMessage()
-                    .concat(": ".concat(String.valueOf(Message.receivedCounter + 1)));
-            messagePassingMain.message.get(Message.receivedCounter).setMessage(newMessage);
-                System.err.println(CommonConstants.CommonMessages.LISTENER_MESSAGE + newMessage);
-//            }
+            update();
 
             try {
                 sleep(CommonConstants.WaitingTime.LISTENER_WAIT_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            messagePassingMain.message.get(Message.receivedCounter) = new Message();
-            Message.receivedCounter++;
-//            Message.counter = counter;
-//            Message.counter++;
         } // end of infinite loop
+    }
 
+    public void update() {
+        System.err.println(CommonConstants.CommonMessages.LISTENER_RECEIVED_MESSAGE + messagePassingMain.message.get(Message.receivedCounter).getMessage());
+        String newMessage = messagePassingMain.message.get(Message.receivedCounter).getMessage()
+                .concat(": ".concat(String.valueOf(Message.receivedCounter + 1)));
+        messagePassingMain.message.get(Message.receivedCounter).setMessage(newMessage);
+        messagePassingMain.message.get(Message.receivedCounter).setStatus(MessageStatusEnum.EDITED);
+        System.err.println(CommonConstants.CommonMessages.LISTENER_EDITED_MESSAGE + newMessage);
+        Message.receivedCounter++;
     }
 }

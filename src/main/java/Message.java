@@ -1,15 +1,16 @@
 public class Message {
     private int id;
     private String message;
-    static int sentCounter = 0;
+    private MessageStatusEnum status;
     static int receivedCounter = 0;
 
     public Message() {
     }
 
-    public Message(int id, String message) {
+    public Message(int id, String message, MessageStatusEnum status) {
         this.id = id;
         this.message = message;
+        this.status = status;
     }
 
     public int getId() {
@@ -28,12 +29,12 @@ public class Message {
         this.message = message;
     }
 
-    public void increaseSentCounter() {
-        sentCounter++;
+    public MessageStatusEnum getStatus() {
+        return status;
     }
 
-    public void decreaseSentCounter() {
-        sentCounter--;
+    public void setStatus(MessageStatusEnum status) {
+        this.status = status;
     }
 
     public void increaseReceivedCounter() {
@@ -48,9 +49,8 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", message='" + message +
-                ", sentCounter='" + sentCounter +
-                ", receivedCounter='" + receivedCounter + '\'' +
+                ", message='" + message + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
