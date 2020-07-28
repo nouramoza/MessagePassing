@@ -4,10 +4,10 @@ import static java.lang.Thread.sleep;
 public class Listener implements Runnable {
 
     private MessagePassingMain messagePassingMain;
+    private Initiator initiator;
 
     public Listener(MessagePassingMain messagePassingMain) {
         this.messagePassingMain = messagePassingMain;
-//        start();
     }
 
     public void run() {
@@ -15,9 +15,7 @@ public class Listener implements Runnable {
             while(messagePassingMain.message.size() <= Message.receivedCounter) { // no order
                 synchronized (this) {
                     try {
-//                        if (1==2) {
                         wait(); // wait for an order
-//                        }
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     } finally {
@@ -43,5 +41,6 @@ public class Listener implements Runnable {
         messagePassingMain.message.get(Message.receivedCounter).setStatus(MessageStatusEnum.EDITED);
         System.err.println(CommonConstants.CommonMessages.LISTENER_EDITED_MESSAGE + newMessage);
         Message.receivedCounter++;
+        initiator.receiveUpdate();
     }
 }

@@ -8,8 +8,8 @@ public class CommonConstants {
     }
 
     public static class WaitingTime{
-        public static final long INITIATOR_WAIT_TIME = 1000;
-        public static final long LISTENER_WAIT_TIME = 10;
+        public static final long INITIATOR_WAIT_TIME = 10;
+        public static final long LISTENER_WAIT_TIME = 1000;
     }
 
     public static class CommonNumbers{

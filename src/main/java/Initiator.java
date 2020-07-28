@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 
 // Initiator class is our Subject that other objects are tracking its changes
 public class Initiator implements Runnable {
+    //constructor Injection
     private MessagePassingMain messagePassingMain;
     private Listener listener;
     //initial Messages
@@ -28,10 +29,9 @@ public class Initiator implements Runnable {
     }
 
     public void run() {
-        int sentCounter = messagePassingMain.message.size();
-        while (sentCounter < CommonConstants.CommonNumbers.NUMBER_OF_COUNT ||
+        while (messagePassingMain.message.size() < CommonConstants.CommonNumbers.NUMBER_OF_COUNT ||
                 Message.receivedCounter < CommonConstants.CommonNumbers.NUMBER_OF_COUNT) {
-                addToMessages(sentCounter);
+            addToMessages(messagePassingMain.message.size());
             try {
                 sleep(CommonConstants.WaitingTime.INITIATOR_WAIT_TIME);
             } catch (InterruptedException e) {
@@ -39,15 +39,9 @@ public class Initiator implements Runnable {
             } finally {
             }
             synchronized (listener) {
-                listener.notify(); // tells to the w.
+                listener.notify(); // tells to the Listener
             }
-
-            sentCounter = messagePassingMain.message.size();
-            receiveUpdate(sentCounter);
-
-
         } // end of infinite loop
-
     }
 
     public void addToMessages(int sentMessageCount) {
@@ -57,11 +51,12 @@ public class Initiator implements Runnable {
         }
     }
 
-    public void receiveUpdate(int sentMessageCount) {
-        if (Message.receivedCounter != 0 && sentMessageCount >= Message.receivedCounter &&
-                messagePassingMain.message.get(Message.receivedCounter -1).getStatus().equals(MessageStatusEnum.EDITED)) {
-            System.err.println(CommonConstants.CommonMessages.INITIATOR_RECEIVED_BACK_MESSAGE + messagePassingMain.message.get(Message.receivedCounter -1).getMessage());
-            messagePassingMain.message.get(Message.receivedCounter -1).setStatus(MessageStatusEnum.READ);
+    public void receiveUpdate() {
+        if (messagePassingMain.message.size() >= Message.receivedCounter &&
+                messagePassingMain.message.get(Message.receivedCounter - 1).getStatus().equals(MessageStatusEnum.EDITED)) {
+            System.err.println(CommonConstants.CommonMessages.INITIATOR_RECEIVED_BACK_MESSAGE + messagePassingMain.message.get(Message.receivedCounter - 1).getMessage());
+            messagePassingMain.message.get(Message.receivedCounter - 1).setStatus(MessageStatusEnum.READ);
+
         }
     }
 }
