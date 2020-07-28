@@ -6,7 +6,7 @@ import static java.lang.Thread.sleep;
 // Initiator class is our Subject that other objects are tracking its changes
 public class Initiator implements Runnable {
     //constructor Injection
-    private MessagePassingMain messagePassingMain;
+    private static MessagePassingMain messagePassingMain;
     private Listener listener;
     //initial Messages
     private List<String> stringList;
@@ -51,7 +51,7 @@ public class Initiator implements Runnable {
         }
     }
 
-    public void receiveUpdate() {
+    public static void receiveUpdate() {
         if (messagePassingMain.message.size() >= Message.receivedCounter &&
                 messagePassingMain.message.get(Message.receivedCounter - 1).getStatus().equals(MessageStatusEnum.EDITED)) {
             System.err.println(CommonConstants.CommonMessages.INITIATOR_RECEIVED_BACK_MESSAGE + messagePassingMain.message.get(Message.receivedCounter - 1).getMessage());

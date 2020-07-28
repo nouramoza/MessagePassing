@@ -4,7 +4,7 @@ import static java.lang.Thread.sleep;
 public class Listener implements Runnable {
 
     private MessagePassingMain messagePassingMain;
-    private Initiator initiator;
+//    private Initiator initiator;
 
     public Listener(MessagePassingMain messagePassingMain) {
         this.messagePassingMain = messagePassingMain;
@@ -41,6 +41,6 @@ public class Listener implements Runnable {
         messagePassingMain.message.get(Message.receivedCounter).setStatus(MessageStatusEnum.EDITED);
         System.err.println(CommonConstants.CommonMessages.LISTENER_EDITED_MESSAGE + newMessage);
         Message.receivedCounter++;
-        initiator.receiveUpdate();
+        Initiator.receiveUpdate();
     }
 }
